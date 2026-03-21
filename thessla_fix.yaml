@@ -72,11 +72,13 @@ sensor:
     skip_updates: 3
     filters:
       - multiply: 0.1
+
+  # --- AIRFLOW SECTION (Fix for 65535) ---
   - platform: modbus_controller
     name: ${device_name} Strumień nawiew
     modbus_controller_id: ${modbus_device_id}
     id: ${modbus_device_id}_strumien_nawiew
-    address: 122
+    address: 256
     register_type: "read"
     accuracy_decimals: 1
     value_type: U_WORD
@@ -87,13 +89,15 @@ sensor:
     name: ${device_name} Strumień wywiew
     modbus_controller_id: ${modbus_device_id}
     id: ${modbus_device_id}_strumien_wywiew
-    address: 123
+    address: 257
     register_type: "read"
     accuracy_decimals: 1
     value_type: U_WORD
     unit_of_measurement: m3/h
     skip_updates: 1
     state_class: measurement
+
+  # --- PERFORMANCE SECTION (For Dashboard bottom values) ---
   - platform: modbus_controller
     name: ${device_name} Odzyskana Moc
     modbus_controller_id: ${modbus_device_id}
@@ -112,6 +116,7 @@ sensor:
     value_type: U_WORD
     unit_of_measurement: "%"
     icon: mdi:percent
+
   - platform: modbus_controller
     name: ${device_name} Wymiana Filtrów
     modbus_controller_id: ${modbus_device_id}
@@ -175,8 +180,6 @@ binary_sensor:
 switch:
   - platform: modbus_controller
     modbus_controller_id: ${modbus_device_id}
-    # 0 lato
-    # 1 zima
     name: "${device_name} Harmonogram tryb: Zima"
     register_type: holding
     address: 4209
@@ -200,8 +203,8 @@ switch:
     address: 4320
     register_type: holding
     skip_updates: 1
-    # bitmask: 1
     inverted: yes
+
 number:
   - platform: modbus_controller
     name: ${device_name} Manual Speed
