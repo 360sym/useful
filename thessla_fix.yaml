@@ -76,7 +76,7 @@ sensor:
     name: ${device_name} Strumień nawiew
     modbus_controller_id: ${modbus_device_id}
     id: ${modbus_device_id}_strumien_nawiew
-    address: 256
+    address: 257
     register_type: "holding"
     accuracy_decimals: 1
     value_type: U_WORD
@@ -89,7 +89,7 @@ sensor:
     name: ${device_name} Strumień wywiew
     modbus_controller_id: ${modbus_device_id}
     id: ${modbus_device_id}_strumien_wywiew
-    address: 257
+    address: 256
     register_type: "holding"
     accuracy_decimals: 1
     value_type: U_WORD
