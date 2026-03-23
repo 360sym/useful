@@ -79,10 +79,12 @@ sensor:
     address: 256
     register_type: "holding"
     accuracy_decimals: 1
-    value_type: S_WORD
+    value_type: U_WORD
     unit_of_measurement: m3/h
     skip_updates: 1
     state_class: measurement
+    filters:
+      - lambda: "return x == 65535 ? 0.0f : x;"
   - platform: modbus_controller
     name: ${device_name} Strumień wywiew
     modbus_controller_id: ${modbus_device_id}
@@ -90,10 +92,12 @@ sensor:
     address: 257
     register_type: "holding"
     accuracy_decimals: 1
-    value_type: S_WORD
+    value_type: U_WORD
     unit_of_measurement: m3/h
     skip_updates: 1
     state_class: measurement
+    filters:
+      - lambda: "return x == 65535 ? 0.0f : x;"
   - platform: modbus_controller
     name: ${device_name} Wymiana Filtrów
     modbus_controller_id: ${modbus_device_id}
