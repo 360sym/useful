@@ -4,7 +4,7 @@
 substitutions:
   device_name: 'Thessla'
   modbus_device_id: 'thessla_modbus'
-  modbus_device_address: '10'
+  modbus_device_address: 10
   modbus_id: 'boneio_modbus'
   update_interval: '60s'
 
@@ -51,7 +51,7 @@ sensor:
     address: 18
     register_type: "read"
     accuracy_decimals: 1
-    value_type: S_WORD
+    value_type: U_WORD
     unit_of_measurement: °C
     device_class: temperature
     state_class: measurement
@@ -65,23 +65,21 @@ sensor:
     address: 19
     register_type: "read"
     accuracy_decimals: 1
-    value_type: S_WORD
+    value_type: U_WORD
     unit_of_measurement: °C
     device_class: temperature
     state_class: measurement
     skip_updates: 3
     filters:
       - multiply: 0.1
-
-  # --- AIRFLOW SECTION (Fix for 65535) ---
   - platform: modbus_controller
     name: ${device_name} Strumień nawiew
     modbus_controller_id: ${modbus_device_id}
     id: ${modbus_device_id}_strumien_nawiew
     address: 256
-    register_type: "read"
+    register_type: "holding"
     accuracy_decimals: 1
-    value_type: U_WORD
+    value_type: S_WORD
     unit_of_measurement: m3/h
     skip_updates: 1
     state_class: measurement
@@ -90,33 +88,12 @@ sensor:
     modbus_controller_id: ${modbus_device_id}
     id: ${modbus_device_id}_strumien_wywiew
     address: 257
-    register_type: "read"
+    register_type: "holding"
     accuracy_decimals: 1
-    value_type: U_WORD
+    value_type: S_WORD
     unit_of_measurement: m3/h
     skip_updates: 1
     state_class: measurement
-
-  # --- PERFORMANCE SECTION (For Dashboard bottom values) ---
-  - platform: modbus_controller
-    name: ${device_name} Odzyskana Moc
-    modbus_controller_id: ${modbus_device_id}
-    id: ${modbus_device_id}_reku_odzysk_moc
-    address: 124
-    register_type: "read"
-    value_type: U_WORD
-    unit_of_measurement: W
-    icon: mdi:counter
-  - platform: modbus_controller
-    name: ${device_name} Sprawność
-    modbus_controller_id: ${modbus_device_id}
-    id: ${modbus_device_id}_reku_sprawnosc
-    address: 126
-    register_type: "read"
-    value_type: U_WORD
-    unit_of_measurement: "%"
-    icon: mdi:percent
-
   - platform: modbus_controller
     name: ${device_name} Wymiana Filtrów
     modbus_controller_id: ${modbus_device_id}
@@ -180,6 +157,8 @@ binary_sensor:
 switch:
   - platform: modbus_controller
     modbus_controller_id: ${modbus_device_id}
+    # 0 lato
+    # 1 zima
     name: "${device_name} Harmonogram tryb: Zima"
     register_type: holding
     address: 4209
@@ -203,8 +182,8 @@ switch:
     address: 4320
     register_type: holding
     skip_updates: 1
+    # bitmask: 1
     inverted: yes
-
 number:
   - platform: modbus_controller
     name: ${device_name} Manual Speed
@@ -237,3 +216,4 @@ select:
       "Pusty dom": 11
       "Otwarte okna": 10
       "Kominek": 2
+      # Fixed
