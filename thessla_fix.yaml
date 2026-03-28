@@ -79,7 +79,7 @@ sensor:
     address: 256
     register_type: "holding"
     accuracy_decimals: 1
-    value_type: U_WORD
+    value_type: S_WORD
     unit_of_measurement: m3/h
     skip_updates: 1
     state_class: measurement
@@ -92,7 +92,7 @@ sensor:
     address: 257
     register_type: "holding"
     accuracy_decimals: 1
-    value_type: U_WORD
+    value_type: S_WORD
     unit_of_measurement: m3/h
     skip_updates: 1
     state_class: measurement
